@@ -10,11 +10,10 @@ import java.util.Date;
 public class Claim {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
     private Date date;
     private int amount;
 
-    @ManyToOne
-    @JoinColumn(name="account_id", nullable=false)
+    @ManyToOne(cascade=CascadeType.ALL)
     private AxieAccount account;
 }
