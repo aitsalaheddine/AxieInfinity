@@ -1,5 +1,6 @@
 package com.axie.community.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import java.util.Set;
 public class AxieAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
     private String email;
     private String password;
     private String roninWallet;
@@ -23,7 +24,7 @@ public class AxieAccount {
     @OneToMany(mappedBy = "account")
     private Set<Claim> claims = new HashSet<>();
 
-    @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
+    @JsonIgnore
+    @ManyToOne(cascade=CascadeType.ALL)
     private UserProfile userProfile;
 }
