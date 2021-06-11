@@ -3,7 +3,9 @@ package com.axie.community.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -11,9 +13,9 @@ import java.util.Set;
 public class UserProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
     private String email;
     private String password;
-    @OneToMany(mappedBy = "userProfile")
-    private Set<AxieAccount> accounts = new HashSet<>();
+    @OneToMany(mappedBy = "userProfile", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<AxieAccount> accounts = new ArrayList<>();
 }
