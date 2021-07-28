@@ -2,9 +2,11 @@ package com.axie.community.controllers;
 
 import com.axie.community.dtos.AccountDetailsDTO;
 import com.axie.community.models.AxieAccount;
+import com.axie.community.models.Player;
 import com.axie.community.models.UserProfile;
 import com.axie.community.repositories.AxieAccountRepository;
 import com.axie.community.services.AccountService;
+import com.axie.community.services.PlayerService;
 import com.axie.community.services.UserProfileService;
 import javassist.expr.NewArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +27,11 @@ public class UserProfileControllerImpl implements UserProfileController {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private PlayerService playerService;
+
     @Override
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<UserProfile>> getAllUserProfiles() {
         return new ResponseEntity<>(this.userProfileService.getAllUserProfiles(), HttpStatus.FOUND);
     }
@@ -47,6 +52,12 @@ public class UserProfileControllerImpl implements UserProfileController {
     @GetMapping(value = "/{id}/accounts")
     public ResponseEntity<List<AccountDetailsDTO>> getAccountsByUserId(@PathVariable Long id) {
         return new ResponseEntity<>(this.accountService.getAccountsByUserId(id), HttpStatus.ACCEPTED);
+    }
+
+    @Override
+    @GetMapping(value = "/{id}/players")
+    public ResponseEntity<List<Player>> getPlayersByUserId(@PathVariable Long id) {
+        return new ResponseEntity<>(this.playerService.getPlayersByUserId(id), HttpStatus.OK);
     }
 
     @Override

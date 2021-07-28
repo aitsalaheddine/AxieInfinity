@@ -18,6 +18,7 @@ public class AccountDetailsDTO {
     private Date next_claim_at;
     private Long playerId;
     private Long playerName;
+    private Float averageDaily;
 
     public void setLast_claimed_item_at(Long last_claimed_item_at) {
         this.last_claimed_item_at = convertDate(last_claimed_item_at);

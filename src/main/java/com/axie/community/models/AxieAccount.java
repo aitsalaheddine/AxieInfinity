@@ -17,6 +17,7 @@ public class AxieAccount {
     private String password;
     private String roninWallet;
     private String metaMaskWallet;
+    private String privateWalletKey;
 
     @OneToOne(mappedBy = "account")
     private Player player;

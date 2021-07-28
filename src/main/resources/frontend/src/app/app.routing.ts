@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
-import {AxieAccountsComponent} from "../../../axi-frontend/src/app/components/axie-accounts/axie-accounts.component";
+import {AxieAccountsComponent} from "./components/axie-accounts/axie-accounts.component";
 
 const routes: Routes =[
   {
@@ -43,9 +43,7 @@ const routes: Routes =[
   imports: [
     CommonModule,
     BrowserModule,
-    RouterModule.forRoot(routes,{
-      useHash: true
-    })
+    RouterModule.forRoot(routes)
   ],
   exports: [
   ],

@@ -14,9 +14,7 @@ public interface AccountController {
 
     public ResponseEntity<AxieAccount> getAccountById(@PathVariable Long id);
 
-    public ResponseEntity<AxieAccount> createAccount(@RequestBody AxieAccountsDTO account);
-
-    public ResponseEntity<String> updateAccount(@RequestBody AxieAccount account);
+    public ResponseEntity<AxieAccount> createOrUpdateAccount(@RequestBody AxieAccount account);
 
     public ResponseEntity<String> deleteAccount(@PathVariable Long id);
 

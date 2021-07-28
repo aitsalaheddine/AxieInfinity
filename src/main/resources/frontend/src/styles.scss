@@ -1,1 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
+@import "../node_modules/ag-grid-community/dist/styles/ag-theme-alpine.css";
+@import "~ng-zorro-antd/ng-zorro-antd.min.css";
+
+.ag-theme-alpine .ag-root-wrapper {
+  border: solid 0px ;
+  border-radius: 10px;
+
+}
+$white:    #fff !default;
+$gray-100: #f6f9fc !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #8898aa !default;   // Line footer color
+$gray-700: #525f7f !default;   // Line p color
+$gray-800: #32325d !default;   // Line heading color
+$gray-900: #212529 !default;
+$black:    #000 !default;
+$table-head-bg:               $gray-100 !default;
+$table-head-color:            $gray-600 !default;
+$table-head-spacer-y:         .75rem !default;
+
+$table-head-font-size:        .65rem !default;
+$table-head-text-transform:   uppercase !default;
+$table-head-letter-spacing:   1px !default;
+$font-weight-bold:            600 !default;
+
+.ag-theme-alpine .ag-header-cell, .ag-theme-alpine .ag-header-group-cell{
+  padding-top: $table-head-spacer-y;
+  padding-bottom: $table-head-spacer-y;
+  font-size: $table-head-font-size;
+  text-transform: $table-head-text-transform;
+  letter-spacing: $table-head-letter-spacing;
+  //border-bottom: $table-border-width solid $table-border-color;
+}
+

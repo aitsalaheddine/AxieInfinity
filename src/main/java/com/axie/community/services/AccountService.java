@@ -9,11 +9,11 @@ import java.util.Optional;
 
 public interface AccountService {
 
-    AxieAccount updateOrUpdateAccount(AxieAccount account);
+    AxieAccount createOrUpdateAccount(AxieAccount account);
 
     void deleteAccount(Long id);
 
-    List<AxieAccount> getAllAccounts();
+    List<AxieAccount> getAllAccounts(Long id);
 
     Optional<AxieAccount> getAccountById(Long id);
 

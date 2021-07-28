@@ -13,6 +13,7 @@ public class Player {
     private Long id;
     private String name;
     private String walletAddress;
+    private String discordId;
     private Date joinDate;
     private int percentage;
     @OneToOne(cascade = CascadeType.ALL)

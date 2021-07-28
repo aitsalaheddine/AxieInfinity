@@ -2,6 +2,8 @@ package com.axie.community.services;
 import com.axie.community.dtos.AccountDetailsDTO;
 import com.axie.community.models.AxieAccount;
 import com.axie.community.repositories.AxieAccountRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +18,6 @@ import java.util.Optional;
 
 @Service
 public class AccountServiceImpl implements AccountService {
-
     @Autowired
     private AxieAccountRepository axieAccountRepository;
 
@@ -24,7 +25,7 @@ public class AccountServiceImpl implements AccountService {
     private RestTemplate restTemplate;
 
     @Override
-    public AxieAccount updateOrUpdateAccount(AxieAccount account) {
+    public AxieAccount createOrUpdateAccount(AxieAccount account) {
         return this.axieAccountRepository.save(account);
     }
 
@@ -34,8 +35,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<AxieAccount> getAllAccounts() {
-        return this.axieAccountRepository.findAll();
+    public List<AxieAccount> getAllAccounts(Long id) {
+        return this.axieAccountRepository.findAxieAccountsByUserProfile_Id(id);
     }
 
     @Override
@@ -49,6 +50,10 @@ public class AccountServiceImpl implements AccountService {
         this.axieAccountRepository.findAxieAccountsByUserProfile_Id(id).forEach( account -> {
             AccountDetailsDTO accountDetailsDTO = getAccountDetailsFromMavis(account);
             accountDetailsDTO.setId(account.getId());
+            Long days = ((new Date().getTime() - accountDetailsDTO.getLast_claimed_item_at().getTime()) /(1000*60*60*24));
+            Float averageDaily = (float) accountDetailsDTO.getTotal() / (float) days ;
+            accountDetailsDTO.setAverageDaily(averageDaily);
+            System.out.println(averageDaily);
             accounts.add(accountDetailsDTO);
         });
         return accounts;
@@ -56,9 +61,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountDetailsDTO getAccountDetailsFromMavis(AxieAccount account) {
-        return restTemplate.getForObject("https://lunacia.skymavis.com/game-api/clients/{accountId}/items/1",
-                AccountDetailsDTO.class,
-                account.getMetaMaskWallet()
-        );
+        return restTemplate.getForObject("https://lunacia.skymavis.com/game-api/clients/{accountId}/items/1", AccountDetailsDTO.class, account.getRoninWallet().replace("ronin:","0x"));
     }
 }

@@ -1,6 +1,5 @@
 package com.axie.community.controllers;
 
-import com.axie.community.dtos.AxieAccountsDTO;
 import com.axie.community.models.AxieAccount;
 import com.axie.community.models.Claim;
 import com.axie.community.services.AccountService;
@@ -24,24 +23,22 @@ public class AccountControllerImpl implements AccountController{
     private ClaimService claimService;
 
     @Override
-    @GetMapping("/")
+    @GetMapping
     public List<AxieAccount> getAllAccounts() {
-        return this.accountService.getAllAccounts();
+        return this.accountService.getAllAccounts(1L);
     }
 
     @Override
-    public ResponseEntity<AxieAccount> getAccountById(Long id) {
-       return new ResponseEntity<>(this.accountService.getAccountById(id).get(), HttpStatus.FOUND);
+    @PostMapping
+    public ResponseEntity<AxieAccount> createOrUpdateAccount(@RequestBody AxieAccount account) {
+        return new ResponseEntity<>(this.accountService.createOrUpdateAccount(account), HttpStatus.CREATED);
     }
-
     @Override
-    public ResponseEntity<AxieAccount> createAccount(AxieAccountsDTO axieAccountsDTO) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<String> updateAccount(AxieAccount account) {
-        return null;
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<AxieAccount> getAccountById(@PathVariable Long id) {
+        if (this.accountService.getAccountById(id).isPresent())
+            return new ResponseEntity<>(this.accountService.getAccountById(id).get(), HttpStatus.OK);
+        else return null;
     }
 
     @Override
@@ -51,7 +48,7 @@ public class AccountControllerImpl implements AccountController{
 
     @Override
     @PostMapping(value = "/{id}/claims")
-    public ResponseEntity<Claim> saveClaim(@RequestBody  Claim claim, @PathVariable Long accountId) {
-        return new ResponseEntity<>(this.claimService.createOrUpdateClaim(claim, accountId), HttpStatus.CREATED);
+    public ResponseEntity<Claim> saveClaim(@RequestBody  Claim claim, @PathVariable Long id) {
+        return new ResponseEntity<>(this.claimService.createOrUpdateClaim(claim, id), HttpStatus.CREATED);
     }
 }
